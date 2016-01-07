@@ -1,6 +1,8 @@
 const p5 = require('p5');
 
 import Element from './wanderer';
+import music from './music';
+import events from './events';
 
 export default class {
 
@@ -19,13 +21,18 @@ export default class {
   	let index;
   	let bg;
     let hue;
+    let hueIncrement;
     let _this = this;
+    let mouseMovedLast = Date.now();
     p.preload = function () {
       okay = p.loadImage('src/emoji/okay.png');
     }
 
     p.setup = function() {
+      music.init();
       hue =  p.random(0,255);
+      hueIncrement = 0.25;
+
       p.createCanvas(p.windowWidth, p.windowHeight);
   		p.noStroke();
   		p.smooth();
@@ -33,30 +40,42 @@ export default class {
   		//
   		elements = [];
   		// let total = Math.round(p.random(10, 100));
-  		let total = 1000;
+  		let total = 500;
   		for (var i = 0; i < total; i++) {
   			//emotes[p.round(p.random(0,4))]
-  			let element = new Element(p.random(0, p.windowWidth), p.random(0, p.windowHeight),10,okay,p , i);
+  			let element = new Element(p.random(0, p.windowWidth), p.random(0, p.windowHeight),600,okay,p , i);
   			elements.push(element);
   		}
   		// p.noLoop();
       _this.canvas = p.canvas;
+
+    }
+    p.mouseMoved = function () {
+      mouseMovedLast = Date.now();
     }
 
     p.draw = function() {
-      p.colorMode(p.HSB, 255);
-      hue +=0.05;
-      // console.log(hue);
-      if (hue > 255) {
-        hue = hue -255;
+      music.update();
+      // console.log(music.level());
+      p.colorMode('HSB', 255);
+      if (hue > 255.0) {
+        hueIncrement = -hueIncrement;
+      } else if (hue < 0.0) {
+        hueIncrement = Math.abs(hueIncrement);
       }
-      bg = p.color(hue,p.random(120,150), p.random(200,250), 10);
+      hue +=hueIncrement;
+      // console.log(hue);
 
-  		p.background(bg);
+      bg = p.color(hue,200,255, 5 *(p.map(music.level(), 0,0.5, 0, 2.0)));
 
+      p.background(bg);
+      p.colorMode('RGB', 255);
+      let mouseIsMoving = !((Date.now()-mouseMovedLast) > 2000);
+      console.log(mouseIsMoving);
   		for (var i = 0; i < elements.length; i++) {
-  			elements[i].wander();
-  			elements[i].run();
+        // console.log(mouseMoved);
+  			elements[i].wander(music,mouseIsMoving);
+  			elements[i].run(music);
   			// elements[i].mousesMoved(elements[10].location.x,elements[10].location.y);
   		}
   		// element.wander();

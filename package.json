@@ -1,7 +1,7 @@
 {
-  "name": "roux",
+  "name": "uh-huh",
   "version": "1.0.0",
-  "description": "a nice base",
+  "description": "sketch - 1/17/2016",
   "main": "index.js",
   "author": {
     "name": "Ben Lyaunzon",
@@ -21,6 +21,7 @@
     "object-assign": "^2.0.0",
     "p5": "^0.4.17",
     "raf-loop": "^1.0.1",
+    "soundcloud-badge": "^1.0.0",
     "three": "^0.70.0",
     "three-orbit-controls": "^69.0.4",
     "three-orbit-viewer": "^69.3.0",

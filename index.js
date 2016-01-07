@@ -18,8 +18,8 @@ import p5Tex from './src/p5tex';
 import addBackground from './src/add-background'
 
 domready(() => {
-  // let p5tex = new p5Tex();
-  // p5tex.init();
+  let p5tex = new p5Tex();
+  p5tex.init();
   // let ctex = new CanvasTex();
   // ctex.init();
 
@@ -30,17 +30,17 @@ domready(() => {
     margin: 0
   })
 
-  setTimeout(function() {
-    const app = viewer({
-      alpha: false,
-      preserveDrawingBuffer: false,
-      antialias: true
-    }, null);
-
-    document.body.appendChild(app.canvas);
-    app.start();
-
-  },100);
+  // setTimeout(function() {
+  //   const app = viewer({
+  //     alpha: false,
+  //     preserveDrawingBuffer: false,
+  //     antialias: true
+  //   }, null);
+  //
+  //   document.body.appendChild(app.canvas);
+  //   app.start();
+  //
+  // },100);
 
   // findMedia().then((media) =>{
   //   loadVideo(media.images.original.mp4).then((vid) =>{
